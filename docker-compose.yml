@@ -8,3 +8,40 @@ services:
       - ./app:/app
     command: >
       sh -c "python manage.py runserver 0.0.0.0:8000"
+    networks:
+      - postgres
+  postgres:
+    image: postgres:15.3
+    container_name: postgres_ksyubarber
+    environment:
+      POSTGRES_DB: ksyubarber
+      POSTGRES_USER: ksyubarber
+      POSTGRES_PASSWORD: ksyubarber
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports: 
+      - "5434:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_ksyubarber
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'den_kostyuk1989@gmail.com'
+      PGADMIN_DEFAULT_PASSWORD: 'admin'
+      PGADMIN_CONFIG_SERVER_MOD: 'False'
+    volumes:
+      - pgadmin:/vae/lib/pgadmin
+    ports:
+      - "5053:80"
+    networks:
+      - postgres
+    restart: unless-stopped
+networks:
+  postgres:
+    driver: bridge
+volumes:
+  postgres:
+  pgadmin:
