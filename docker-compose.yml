@@ -6,8 +6,6 @@ services:
       - "8000:8000"
     volumes:
       - ./app:/app
-    command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"
     networks:
       - postgres
   postgres:
@@ -21,7 +19,7 @@ services:
     volumes:
       - postgres:/data/postgres
     ports: 
-      - "5434:5432"
+      - "5435:5432"
     networks:
       - postgres
     restart: unless-stopped
